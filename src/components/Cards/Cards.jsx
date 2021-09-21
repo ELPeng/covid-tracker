@@ -4,24 +4,25 @@ import CountUp from 'react-countup'
 
 import styles from './Cards.module.css'
 
-const Cards = ({ data: { confirmed, recovered, deaths, lastUpdate } }) => {
+const Cards = ({ data: { confirmed, recovered, deaths, date } }) => {
+
     const cardInfo = [
         {
             title: 'Infected',
             style: `${styles.card} ${styles.infected}`,
-            endVal: confirmed.value,
+            category: confirmed,
             description: 'Number of active cases of COVID-19'
         },
         {
             title: 'Recovered',
             style: `${styles.card} ${styles.recovered}`,
-            endVal: recovered.value,
+            category: recovered,
             description: 'Number of recoveries from COVID-19'
         },
         {
             title: 'Deaths',
             style: `${styles.card} ${styles.deaths}`,
-            endVal: deaths.value,
+            category: deaths,
             description: 'Number of deaths caused by COVID-19'
         },
     ]
@@ -39,12 +40,12 @@ const Cards = ({ data: { confirmed, recovered, deaths, lastUpdate } }) => {
                             <Typography variant="h5">
                                 <CountUp
                                     start={0}
-                                    end={card.endVal}
-                                    duration={2.5}
+                                    end={card.category}
+                                    duration={2}
                                     separator=","
                                 />
                             </Typography>
-                            <Typography color="textSecondary">{new Date(lastUpdate).toDateString()}</Typography>
+                            <Typography color="textSecondary">{new Date(date).toDateString()}</Typography>
                             <Typography variant="body2">{card.description}</Typography>
                         </CardContent>
                     </Grid>

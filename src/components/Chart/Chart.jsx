@@ -6,15 +6,12 @@ import styles from './Chart.module.css'
 
 const Chart = ({ data: { confirmed, deaths, recovered }, country }) => {
     const [dailyData, setDailyData] = useState([])
-
+    // console.log(confirmed, deaths, recovered, country)
         useEffect(() => {
             const fetchAPI = async() => {
                 setDailyData(await fetchDailyData())
             }
 
-            console.log(confirmed)
-            console.log(deaths)
-            console.log(recovered)
             fetchAPI()
         }, [])
 
@@ -40,8 +37,6 @@ const Chart = ({ data: { confirmed, deaths, recovered }, country }) => {
                     }}
                 />) : null
         )
-
-        console.log(confirmed, recovered, deaths)
         
         const barChart = (
             confirmed
@@ -56,7 +51,7 @@ const Chart = ({ data: { confirmed, deaths, recovered }, country }) => {
                                     'rgba(0, 255, 0, 0.5)',
                                     'rgba(255, 0, 0, 0.5)',
                                 ],
-                                 data: [confirmed.value, recovered.value, deaths.value]
+                                 data: [confirmed, recovered, deaths]
                             }]
                         }}
                         options={{

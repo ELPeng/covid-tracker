@@ -14,7 +14,6 @@ class App extends Component{
 
     async componentDidMount(){
         const fetchedData = await fetchData()
-
         this.setState({ data: fetchedData })
     }
 
@@ -23,6 +22,7 @@ class App extends Component{
 
         this.setState({data: fetchedData, country: country})
     }
+
     render(){
         const { data, country } = this.state
         return (
