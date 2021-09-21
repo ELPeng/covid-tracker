@@ -9,9 +9,11 @@ export const fetchData = async (country) => {
     if(country){
         changeableUrl = `${url}/countries/${country}`
         try{
-            const { data: { data: { updated_at, latest_data: { confirmed, recovered, deaths } } } } = await axios.get(changeableUrl)
-            console.log(confirmed, recovered, deaths, updated_at)
-            return { confirmed, recovered, deaths, updated_at }
+            const { data } = await axios.get(changeableUrl)
+            const {confirmed, recovered, deaths} = data.data.latest_data
+            const date = data.data.updated_at
+
+            return { confirmed, recovered, deaths, date }
         } catch(error) {
             console.log(error)
         }
@@ -53,7 +55,7 @@ export const fetchCountries = async() => {
         return countries.map((country) => ({
             name: country.name,
             code: country.code
-        }))
+        })).sort((a, b) => a.name > b.name && 1 || -1)
     } catch (error) {
         console.log(error)
     }
