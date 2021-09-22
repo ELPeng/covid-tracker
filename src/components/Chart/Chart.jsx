@@ -6,14 +6,28 @@ import styles from './Chart.module.css'
 
 const Chart = ({ data: { confirmed, deaths, recovered, infectedDataFor3Months }, country }) => {
     const isGlobal = country && country !== 'Global'
+    const [width, setWidth] = useState(window.innerWidth)
     const [dailyData, setDailyData] = useState([])
-        useEffect(() => {
-            const fetchAPI = async() => {
-                setDailyData(await fetchDailyData())
-            }
+    
+    function handleWindowSizeChange(){
+        setWidth(window.innerWidth)
+    }
+    useEffect(() => {
+        window.addEventListener('resize', handleWindowSizeChange)
+        return () => {
+            window.removeEventListener('resize', handleWindowSizeChange)
+        }
+    }, [])
 
-            fetchAPI()
-        }, [])
+    useEffect(() => {
+        const fetchAPI = async() => {
+            setDailyData(await fetchDailyData())
+        }
+
+        fetchAPI()
+    }, [])
+
+    let isMobile = width <= 768   
         
         const lineChart = (
             dailyData.length
@@ -62,8 +76,8 @@ const Chart = ({ data: { confirmed, deaths, recovered, infectedDataFor3Months },
                             }]
                         }}
                         options={{
-                            legend: { display: false },
                             plugins:{
+                                legend: { display: false },
                                 title: { 
                                     display: true, 
                                     text: `Current state in ${country}`,
@@ -90,20 +104,27 @@ const Chart = ({ data: { confirmed, deaths, recovered, infectedDataFor3Months },
                             fill: true,
                         },],
                     }}
-                    options= {{
+                    options={{
+                        scales:{
+                            xAxis:{
+                                display: !isMobile
+                            }
+                        },
                         plugins: {
                             title: {
                                 display: true,
                                 text: `Infected population in ${country} over last 90 days`,
                                 font:{
-                                    size: 18
+                                    size: 16
                                 },
                                 padding: {
                                     top: 30,
                                     bottom: 15
-                                }
-                            }
-                    }}}
+                                },
+                            },
+                            legend: { display: false },
+                        }
+                    }}
                 />) : <div className={styles.error}>
                         <p>Unable to populate data from last 3 months.</p>
                         <p>Please select another country</p>
