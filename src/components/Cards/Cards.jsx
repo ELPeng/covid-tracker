@@ -4,14 +4,20 @@ import CountUp from 'react-countup'
 
 import styles from './Cards.module.css'
 
-const Cards = ({ data: { confirmed, recovered, deaths, date } }) => {
-
+const Cards = ({ data: { confirmed, recovered, deaths, date, new_confirmed } }) => {
+    console.log(confirmed, new_confirmed)
     const cardInfo = [
         {
             title: 'Infected',
             style: `${styles.card} ${styles.infected}`,
             category: confirmed,
             description: 'Number of active cases of COVID-19'
+        },
+        {
+            title: 'Daily Infected',
+            style: `${styles.card} ${styles.infected}`,
+            category: new_confirmed,
+            description: 'Number of new cases of COVID-19 today'
         },
         {
             title: 'Recovered',
@@ -25,6 +31,7 @@ const Cards = ({ data: { confirmed, recovered, deaths, date } }) => {
             category: deaths,
             description: 'Number of deaths caused by COVID-19'
         },
+
     ]
 
     if(!confirmed){
@@ -34,7 +41,7 @@ const Cards = ({ data: { confirmed, recovered, deaths, date } }) => {
         <div className={styles.container}>
             <Grid container spacing={3} justifyContent="center">
                 {cardInfo.map((card, i) => (
-                    <Grid item component={Card} xs={12} md={3} className={card.style} key={i}>
+                    <Grid item component={Card} xs={12} md={4} className={card.style} key={i}>
                         <CardContent>
                             <Typography color="textSecondary" gutterBottom>{card.title}</Typography>
                             <Typography variant="h5">
