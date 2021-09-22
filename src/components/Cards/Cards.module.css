@@ -10,6 +10,9 @@
 .infected{
     border-bottom: 10px solid rgba(0, 0, 255, 0.5)
 }
+.daily_infected{
+    border-bottom: 10px solid rgba(174, 0, 255, 0.5)
+}
 
 .recovered{
     border-bottom: 10px solid rgba(0, 255, 0, 0.5)

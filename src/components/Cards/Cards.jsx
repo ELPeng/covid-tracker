@@ -14,8 +14,8 @@ const Cards = ({ data: { confirmed, recovered, deaths, date, new_confirmed } }) 
             description: 'Number of active cases of COVID-19'
         },
         {
-            title: 'Daily Infected',
-            style: `${styles.card} ${styles.infected}`,
+            title: 'New Infected',
+            style: `${styles.card} ${styles.daily_infected}`,
             category: new_confirmed,
             description: 'Number of new cases of COVID-19 today'
         },

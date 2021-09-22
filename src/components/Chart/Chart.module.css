@@ -6,6 +6,11 @@
     /* background-color: #424242; */
 }
 
+.error{
+    font-family: Roboto;
+    text-align: center;
+}
+
 @media (max-width: 770px){
     .container{
         width: 100%;

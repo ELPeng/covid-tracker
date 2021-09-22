@@ -5,6 +5,7 @@ import { Line, Bar } from 'react-chartjs-2'
 import styles from './Chart.module.css'
 
 const Chart = ({ data: { confirmed, deaths, recovered, infectedDataFor3Months }, country }) => {
+    const isGlobal = country && country !== 'Global'
     const [dailyData, setDailyData] = useState([])
         useEffect(() => {
             const fetchAPI = async() => {
@@ -33,6 +34,13 @@ const Chart = ({ data: { confirmed, deaths, recovered, infectedDataFor3Months },
                             backgroundColor: 'rgba(255, 0, 0, 0.5)',
                             fill: true,
                         },],
+                    }}
+                    options={{
+                        elements:{
+                            point:{
+                                pointRadius: 0
+                            }
+                        },
                     }}
                 />) : null
         )
@@ -70,7 +78,7 @@ const Chart = ({ data: { confirmed, deaths, recovered, infectedDataFor3Months },
         )
 
         const countryLineChart = (
-            infectedDataFor3Months
+            infectedDataFor3Months && infectedDataFor3Months.length
                 ? (
                 <Line 
                     data={{
@@ -96,14 +104,17 @@ const Chart = ({ data: { confirmed, deaths, recovered, infectedDataFor3Months },
                                 }
                             }
                     }}}
-                />) : null
+                />) : <div className={styles.error}>
+                        <p>Unable to populate data from last 3 months.</p>
+                        <p>Please select another country</p>
+                    </div>
         )
         
 
     return (
         <div className={styles.container}>
-            {country !== 'Global' ? barChart : lineChart}
-            {country ? countryLineChart : null}
+            {isGlobal ? barChart : lineChart}
+            {isGlobal ? countryLineChart : null}
         </div>
     )
 }
